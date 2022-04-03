@@ -1,6 +1,9 @@
 const redux = require("redux")
 const { createStore, combineReducers} = require("redux")
-
+const { createLogger } = require("redux-logger")
+// Import Apply middleware
+const logger = createLogger()
+const applyMiddleWare = redux.applyMiddleware
 // Action
 const BUY_CAKE = 'BUY_CAKE'
 const BUY_ICE = 'BUY_ICE'
@@ -50,9 +53,10 @@ const rootRecucer = combineReducers({
     cake: reducer,
     ice: creamReducer
 })
-const store = createStore(rootRecucer)
+// Pass it in the store and add the task you want like logging the programs
+const store = createStore(rootRecucer, applyMiddleWare(logger))
 console.log(store.getState().cake.numberOfCake, store.getState().ice.numberOfIce);
-const unsubscribe = store.subscribe(() => console.log('Updated', store.getState()))
+const unsubscribe = store.subscribe(() => {})
 store.dispatch(buyCake())
 
 store.dispatch(buyCake())
