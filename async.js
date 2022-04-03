@@ -3,17 +3,18 @@ const thunkMiddleware = require('redux-thunk').default
 const axios = require('axios')
 const createStore = redux.createStore
 const applyMiddleware = redux.applyMiddleware
-
+//Initial State
 const initialState = {
   loading: false,
   users: [],
   error: '🤪'
 }
-
+// Actions
 const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST'
 const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS'
 const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE'
 
+//Action Creators
 const fetchUsersRequest = () => {
   return {
     type: FETCH_USERS_REQUEST
@@ -34,6 +35,7 @@ const fetchUsersFailure = error => {
   }
 }
 
+// Asysc API FUNCTIONS
 const fetchUsers = () => {
   return function (dispatch) {
     dispatch(fetchUsersRequest())
@@ -51,6 +53,7 @@ const fetchUsers = () => {
   }
 }
 
+// REDUCERS
 const reducer = (state = initialState, action) => {
   console.log(action.type)
   switch (action.type) {
@@ -74,6 +77,7 @@ const reducer = (state = initialState, action) => {
   }
 }
 
+// Creating Store
 const store = createStore(reducer, applyMiddleware(thunkMiddleware))
 store.subscribe(() => { console.log(store.getState(), '🤪') })
 store.dispatch(fetchUsers())
